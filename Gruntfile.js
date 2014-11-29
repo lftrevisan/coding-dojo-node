@@ -22,10 +22,6 @@ module.exports = function (grunt) {
 
     // Project settings
     pkg: grunt.file.readJSON('package.json'),
-    yeoman: {
-      // configurable paths
-      dist: 'dist'
-    },
     express: {
       options: {
         port: process.env.PORT || 9000
@@ -64,18 +60,6 @@ module.exports = function (grunt) {
 
     // Empties folders to start fresh
     clean: {
-      dist: {
-        files: [{
-          dot: true,
-          src: [
-            '.tmp',
-            '<%= yeoman.dist %>/*',
-            '!<%= yeoman.dist %>/.git*',
-            '!<%= yeoman.dist %>/.openshift',
-            '!<%= yeoman.dist %>/Procfile'
-          ]
-        }]
-      },
       server: '.tmp'
     },
 
@@ -107,15 +91,7 @@ module.exports = function (grunt) {
       ]
     },
 
-    // Test settings
-    karma: {
-      unit: {
-        configFile: 'karma.conf.js',
-        singleRun: true
-      }
-    },
-
-    mochaTest: {
+   mochaTest: {
       options: {
         reporter: 'spec'
       },
@@ -174,22 +150,12 @@ module.exports = function (grunt) {
       ]);
     }
 
-    else if (target === 'client') {
-      return grunt.task.run([
-        'clean:server',
-        'env:all',
-        'concurrent:test',
-        'karma'
-      ]);
-    }
-
     else grunt.task.run([
       'test:server',
     ]);
   });
 
   grunt.registerTask('build', [
-    'clean:dist',
     'concurrent:dist'
   ]);
 
